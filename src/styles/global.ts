@@ -4,8 +4,16 @@ export default createGlobalStyle`
   // Variables
   :root {
     // Color pallete
+    --color-primary-300: #ff9000;
+
+    --color-grey-100: #f4ede8;
+    --color-grey-550: #666360;
     --color-grey-700: #312e38;
+    --color-grey-800: #232129;
     --color-white: #ffffff;
+
+    // Other color variables
+    --color-primary: #ff9000;
   }
 
   // Resetting
