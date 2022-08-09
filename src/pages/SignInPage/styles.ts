@@ -26,38 +26,12 @@ export const Content = styled.div`
       margin-bottom: 2.4rem;
     }
 
-    input {
-      width: 100%;
-      color: var(--color-grey-100);
-      border: 2px solid var(--color-grey-800);
-      border-radius: 1rem;
-      background: var(--color-grey-800);
-      padding: 1.6rem;
-
-      &::placeholder {
-        color: var(--color-grey-550);
-      }
-
-      & + input {
-        margin-top: 0.8rem;
-      }
+    & > div:not(:last-of-type) {
+      margin-bottom: 0.8rem;
     }
 
     button {
-      width: 100%;
-      height: 5.6rem;
-      font-weight: 500;
-      color: var(-color-grey-700);
-      border: 0;
-      border-radius: 1rem;
-      background: var(--color-primary);
-      padding: 0 1.6rem;
       margin-top: 1.6rem;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#ff9000')};
-      }
     }
 
     a {
