@@ -8,7 +8,7 @@ export const Container = styled.div`
   border: 2px solid var(--color-grey-800);
   border-radius: 1rem;
   background: var(--color-grey-800);
-  padding: 1.6rem;
+  padding: 0 1.6rem;
 
   svg {
     fill: transparent;
@@ -22,6 +22,7 @@ export const StyledInput = styled.input`
   background: transparent;
   border: none;
   outline: none;
+  padding: 1.6rem 0;
 
   &::placeholder {
     color: var(--color-grey-550);
