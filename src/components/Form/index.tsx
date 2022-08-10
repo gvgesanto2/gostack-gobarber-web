@@ -8,7 +8,7 @@ import { StyledForm } from './styles';
 type InputEvent = ChangeEvent<HTMLInputElement>;
 type FormEventType = FormEvent<HTMLFormElement>;
 
-interface FormFields {
+export interface FormFields {
   type: string;
   name: string;
   placeholder: string;
