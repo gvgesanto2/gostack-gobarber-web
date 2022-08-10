@@ -17,29 +17,15 @@ export const Content = styled.div`
   width: 100%;
   max-width: 70rem;
 
-  form {
-    margin: 8rem 0;
-    width: 34rem;
-    text-align: center;
-
-    h1 {
-      margin-bottom: 2.4rem;
-    }
-
-    & > div:not(:last-of-type) {
-      margin-bottom: 0.8rem;
-    }
-
-    button {
-      margin-top: 1.6rem;
-    }
+  img {
+    margin-bottom: 8rem;
   }
 
   & > a {
     display: flex;
     align-items: center;
     color: var(--color-grey-100);
-    margin-top: 2.4rem;
+    margin-top: 8rem;
     transition: all 0.2s;
 
     svg {
