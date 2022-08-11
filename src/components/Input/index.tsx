@@ -1,31 +1,45 @@
-import { FocusEvent, InputHTMLAttributes, useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
+import InputError from '../InputError';
 import { Container, StyledInput } from './styles';
-
-type InputFocusEvent = FocusEvent<HTMLInputElement>;
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  value: string;
   icon?: React.ComponentType<IconBaseProps>;
+  errorMsg?: string;
 }
 
-export default function Input({ icon: Icon, ...rest }: InputProps) {
+export default function Input({
+  icon: Icon,
+  value,
+  errorMsg,
+  ...rest
+}: InputProps) {
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [isInputFilled, setIsInputFilled] = useState(false);
 
   const handleOnFocus = () => {
     setIsInputFocused(true);
   };
 
-  const handleOnBlur = (event: InputFocusEvent) => {
+  const handleOnBlur = () => {
     setIsInputFocused(false);
-    setIsInputFilled(!!event.target.value);
   };
 
   return (
-    <Container isInputFocused={isInputFocused} isInputFilled={isInputFilled}>
+    <Container
+      hasError={!!errorMsg}
+      isInputFocused={isInputFocused}
+      isInputFilled={!!value}
+    >
       {Icon && <Icon size={20} />}
-      <StyledInput onFocus={handleOnFocus} onBlur={handleOnBlur} {...rest} />
+      <StyledInput
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
+        value={value}
+        {...rest}
+      />
+      {errorMsg && <InputError message={errorMsg} />}
     </Container>
   );
 }

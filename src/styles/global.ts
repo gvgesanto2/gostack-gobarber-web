@@ -12,8 +12,11 @@ export default createGlobalStyle`
     --color-grey-800: #232129;
     --color-white: #ffffff;
 
+    --color-red-300: #c53030;
+
     // Other color variables
-    --color-primary: #ff9000;
+    --color-primary: var(--color-primary-300);
+    --color-error: var(--color-red-300);
   }
 
   // Resetting
@@ -66,7 +69,6 @@ export default createGlobalStyle`
 
   svg {
     color: inherit;
-    fill: currentColor;
   }
 
   textarea {

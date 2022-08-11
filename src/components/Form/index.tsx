@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
+import { ValidationError, ObjectSchema } from 'yup';
+import { ObjectShape } from 'yup/lib/object';
+import { getValidationErrors } from '../../utils/validation.utils';
 import Button from '../Button';
 import Input from '../Input';
 
@@ -15,25 +19,45 @@ export interface FormFields {
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-interface FormProps {
-  title: string;
-  fields: Array<FormFields>;
-  buttonText: string;
-}
-
 interface DefaultFormFields {
   [name: string]: string;
 }
 
-export default function Form({ title, fields, buttonText }: FormProps) {
+type InputErrors = DefaultFormFields;
+
+interface FormProps {
+  title: string;
+  fields: Array<FormFields>;
+  buttonText: string;
+  validationSchema?: ObjectSchema<ObjectShape>;
+}
+
+export default function Form({
+  title,
+  fields,
+  buttonText,
+  validationSchema,
+}: FormProps) {
   const defaultFormFields: DefaultFormFields = fields.reduce(
     (acc, { name }) => ({ ...acc, [name]: '' }),
     {},
   );
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [errors, setErrors] = useState<InputErrors>({});
 
-  const resetFormFields = () => {
+  const resetAllFormFields = () => {
     setFormFields(defaultFormFields);
+  };
+
+  const resetFormFieldsWithError = (inputErrors: InputErrors) => {
+    let newFormFields = formFields;
+    Object.keys(inputErrors).forEach(fieldName => {
+      newFormFields = {
+        ...newFormFields,
+        [fieldName]: '',
+      };
+    });
+    setFormFields(newFormFields);
   };
 
   const handleChange = (event: InputEvent) => {
@@ -42,12 +66,22 @@ export default function Form({ title, fields, buttonText }: FormProps) {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = (event: FormEventType) => {
+  const handleSubmit = async (event: FormEventType) => {
     event.preventDefault();
 
-    console.log(formFields);
-
-    resetFormFields();
+    try {
+      if (validationSchema) {
+        await validationSchema.validate(formFields, {
+          abortEarly: false,
+        });
+      }
+      setErrors({});
+      resetAllFormFields();
+    } catch (error: ValidationError | any) {
+      const validationErrors = getValidationErrors(error);
+      setErrors(validationErrors);
+      resetFormFieldsWithError(validationErrors);
+    }
   };
 
   return (
@@ -59,7 +93,7 @@ export default function Form({ title, fields, buttonText }: FormProps) {
           name={name}
           value={formFields[name]}
           onChange={handleChange}
-          required
+          errorMsg={errors[name]}
           {...rest}
         />
       ))}

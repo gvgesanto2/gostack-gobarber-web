@@ -1,12 +1,16 @@
-import { object, string } from 'yup';
+import { object, string, ValidationError } from 'yup';
 import { FormFields } from '../components/Form';
 import { capitalizeFirstLetter } from './string.utils';
 
-const getRequiredMessage = (fieldName: string) => {
+interface Errors {
+  [key: string]: string;
+}
+
+export const getRequiredMessage = (fieldName: string) => {
   return `${capitalizeFirstLetter(fieldName)} is required`;
 };
 
-export const getValidationSchemaFromFields = (fields: FormFields) => {
+export const getValidationSchemaFromFields = (fields: Array<FormFields>) => {
   const validationObj = fields.reduce((acc, { name }) => {
     let validator;
 
@@ -27,4 +31,16 @@ export const getValidationSchemaFromFields = (fields: FormFields) => {
   }, {});
 
   return object().shape(validationObj);
+};
+
+export const getValidationErrors = (error: ValidationError): Errors => {
+  const validationErrors: Errors = {};
+
+  error.inner.forEach(({ path, message }) => {
+    if (path) {
+      validationErrors[path] = message;
+    }
+  });
+
+  return validationErrors;
 };

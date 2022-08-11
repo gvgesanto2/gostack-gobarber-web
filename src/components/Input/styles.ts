@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface ContainerProps {
   isInputFocused: boolean;
   isInputFilled: boolean;
+  hasError: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -16,10 +17,19 @@ export const Container = styled.div<ContainerProps>`
   padding: 0 1.6rem;
   transition: all 0.2s;
 
-  svg {
-    fill: transparent;
+  > svg:first-child {
     margin-right: 1.6rem;
   }
+
+  > div:last-child {
+    margin-left: 1.6rem;
+  }
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      border-color: var(--color-error);
+    `}
 
   ${({ isInputFocused }) =>
     isInputFocused &&
