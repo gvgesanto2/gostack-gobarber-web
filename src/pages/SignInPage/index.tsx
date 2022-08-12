@@ -2,6 +2,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
 import logoImg from '../../assets/images/logo.svg';
 import Form from '../../components/Form';
+import { getValidationSchemaFromFields } from '../../utils/validation.utils';
 
 import {
   Background,
@@ -16,7 +17,7 @@ const fields = [
     icon: FiMail,
     name: 'email',
     placeholder: 'Enter your email...',
-    type: 'email',
+    type: 'text',
   },
   {
     icon: FiLock,
@@ -26,13 +27,20 @@ const fields = [
   },
 ];
 
+const schema = getValidationSchemaFromFields(fields);
+
 export default function SingInPage() {
   return (
     <Container>
       <Content>
         <img src={logoImg} alt="GoBarber" />
 
-        <Form title="Sign In" buttonText="Sign In" fields={fields} />
+        <Form
+          validationSchema={schema}
+          title="Sign In"
+          buttonText="Sign In"
+          fields={fields}
+        />
         <ForgotPasswordLink href="/">Forgot your password?</ForgotPasswordLink>
 
         <SignUpLink href="/">

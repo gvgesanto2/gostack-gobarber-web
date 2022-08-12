@@ -27,9 +27,9 @@ const fields = [
   },
 ];
 
-export default function SingUpPage() {
-  const schema = getValidationSchemaFromFields(fields);
+const schema = getValidationSchemaFromFields(fields);
 
+export default function SingUpPage() {
   return (
     <Container>
       <Background />

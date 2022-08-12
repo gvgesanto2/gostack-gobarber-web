@@ -1,11 +1,11 @@
-// import SingInPage from './pages/SignInPage';
-import SingUpPage from './pages/SignUpPage';
+import SingInPage from './pages/SignInPage';
+// import SingUpPage from './pages/SignUpPage';
 import GlobalStyle from './styles/global';
 
 function App() {
   return (
     <>
-      <SingUpPage />
+      <SingInPage />
       <GlobalStyle />
     </>
   );
